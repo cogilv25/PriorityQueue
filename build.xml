@@ -10,6 +10,9 @@
 <project name="PriorityQueue" default="default" basedir=".">
     <description>Builds, tests, and runs the project PriorityQueue.</description>
     <import file="nbproject/build-impl.xml"/>
+
+    <target depends="init,compile,test,-debug-start-debugger,-debug-start-debuggee" description="Debug project in IDE." if="netbeans.home" name="debug"/>
+    
     <!--
 
     There exist several targets which are by default empty and which can be 
