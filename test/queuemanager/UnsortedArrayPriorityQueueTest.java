@@ -68,7 +68,7 @@ public class UnsortedArrayPriorityQueueTest {
         } catch(QueueOverflowException e) {
         }
         //Check the queue has all items in their expected places
-        String expResult = "[(Roger, 12), (Jordan, 5), (Holly, 1), (Octavia, 13), (Billy, 4), (Ricky, 30), (Jennifer, 19)]";
+        String expResult = "[(Donald, 1), (Roger, 12), (Jordan, 5), (Holly, 1), (Billy, 4), (Octavia, 13), (Ricky, 30), (Jennifer, 19)]";
         String result = stringQueue.toString();
         assertEquals(expResult, result);
     }
@@ -140,12 +140,12 @@ public class UnsortedArrayPriorityQueueTest {
         //Remove all items from the queue and for each one removed
         // check that the correct item has been removed
         String [] strings = {"Danielle", "Rachel", "Jamie", "Octavia",
-            "Roger", "Jordan", "Billy"};
+            "Roger", "Jordan", "Billy", "Holly"};
         try{
-            for(int i =0;i<7;++i)
+            for(int i =0;i<8;++i)
             {
+                assertEquals(strings[i],stringQueue.head());
                 stringQueue.remove();
-                assertNotEquals(strings[i],"");
             }
         }catch(QueueUnderflowException e)
         {
