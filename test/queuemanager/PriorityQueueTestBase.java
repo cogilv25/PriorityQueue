@@ -14,9 +14,10 @@ import static org.junit.Assert.*;
 /**
  * Base Test class for all implementations of ****PriorityQueueTest classes.
  * 
- * Naming this class PriorityQueueTest causes JUnit4 to attempt to run the tests which isn't what we want. This is the Base class
- * for all ***PriorityQueueTest classes it contains the common functions for all priority queue implementations to avoid excessive
- * code duplication.
+ * Naming this class PriorityQueueTest causes JUnit4 to attempt to run the tests
+ * which isn't what we want. This is the Base class for all ***PriorityQueueTest
+ * classes it contains the common functions for all priority queue
+ * implementations to avoid excessive code duplication.
  * 
  * @author Calum Lindsay
  */
@@ -48,6 +49,9 @@ public abstract class PriorityQueueTestBase {
         13, 87,
         6
     };
+    /**
+     * Common sorted test data for all priority queue tests.
+     */
     protected int[] sortedPriorities =
     {
         99, 87,
@@ -72,24 +76,35 @@ public abstract class PriorityQueueTestBase {
     };
     
     
+    /**
+     * Tests that head throws an exception when called on an empty queue.
+     */
     @Test
     public void shouldThrowExceptionWhenHeadCalledOnEmptyQueue()
     {
-        //Checking the highest priority item on an empty list
-        // should throw an exception
+        /**
+         * Checking the highest priority item on an empty list should throw an
+         * exception.
+         */
         try 
         {
             pq.head();
-            //Fail if no exception is thrown
+            /**
+             * Fail if no exception is thrown.
+             */
             fail("No Exception recieved when accessing the head of an empty queue");
         } catch(QueueUnderflowException e) {}
     }
     
+    /**
+     * Tests that remove throws an exception when called on an empty queue.
+     */
     @Test
     public void shouldThrowExceptionWhenRemovingFromEmptyQueue()
     {
-        //Removing an item from an empty list
-        // should throw an exception
+        /**
+         * Removing an item from an empty list should throw an exception.
+         */
         try
         {
             pq.remove();
@@ -98,12 +113,18 @@ public abstract class PriorityQueueTestBase {
         } catch(QueueUnderflowException e){}
     }
     
+    /**
+     * Tests that isEmpty returns true when the queue is empty.
+     */
     @Test
     public void shouldReturnTrueWhenIsEmptyCalledOnEmptyQueue()
     {
         assertTrue(pq.isEmpty());
     }
     
+    /**
+     * Tests that toString returns the expected string when the queue is empty.
+     */
     @Test
     public void shouldReturnExpectedStringFromToStringWhenQueueIsEmpty()
     {
@@ -112,7 +133,10 @@ public abstract class PriorityQueueTestBase {
     }
     
     
-    //The implementation of these functions differs depending on whether or not the ADT has an expandable capacity.
+    /**
+     * The implementation of these functions differs depending on whether or not
+     * the ADT has an expandable capacity.
+     */
     @Test
     public abstract void shouldAddItemsWhenAddingToNonFullQueue();
     

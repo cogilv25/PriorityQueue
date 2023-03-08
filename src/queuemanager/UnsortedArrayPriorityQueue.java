@@ -1,13 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package queuemanager;
 
 /**
+ * Implementation of the PriorityQueue ADT using an unsorted array for storage.
+ *
+ * Because Java does not allow generic arrays, this is implemented as an
+ * array of Object and some nasty casting has to be done here and there.
+ * 
+ * @param <T> The type of things being stored.
  *
  * @author Calum Lindsay
- * @param <T> The type of things being stored.
  */
 public class UnsortedArrayPriorityQueue<T> implements PriorityQueue<T> {
 
@@ -18,8 +19,6 @@ public class UnsortedArrayPriorityQueue<T> implements PriorityQueue<T> {
 
     /**
      * The index of the last item stored.
-     *
-     * This is equal to the item count minus one.
      */
     private int tailIndex;
     
@@ -34,7 +33,15 @@ public class UnsortedArrayPriorityQueue<T> implements PriorityQueue<T> {
         storage = new Object[size];
     }
     
-    
+    /**
+     * Takes an item and a priority, creates a PriorityItem and adds this
+     * to the end of the internal Object arrays used capacity. Throws an
+     * exception if the capacity of the array is used up.
+     * 
+     * @param item The item to be added to the queue
+     * @param priority The priority of the item to be added to the queue
+     * @throws QueueOverflowException 
+     */
     @Override
     public void add(T item, int priority) throws QueueOverflowException {
         if(tailIndex >= storage.length - 1)
@@ -44,33 +51,58 @@ public class UnsortedArrayPriorityQueue<T> implements PriorityQueue<T> {
         storage[tailIndex] = new PriorityItem<>(item,priority);
     }
     
+    /**
+     * Helper function to find the index of the highest priority item in the 
+     * queue.
+     * 
+     * @return  index of the highest priority item stored
+     * @throws QueueUnderflowException 
+     */
     private int findIndexOfHighestPriorityItem() throws QueueUnderflowException
     {
         if(isEmpty())
             throw new QueueUnderflowException();
         
-        /* Some less than pretty casting going on here but at the end of the day
-            it's simply a loop finding the index of the item with the highest priority */
+        /**
+         * Some less than pretty casting going on here but at the end of the day
+         * it's simply a loop finding the index of the item with the highest priority
+        */
         int headIndex = tailIndex;
         for(int i=tailIndex;i>=0;--i)
         {
-            //Find the 2 priorities to compare
+            /**
+             * Find the 2 priorities to compare.
+             */
             int currentHeadPriority = ((PriorityItem<T>)storage[headIndex]).getPriority();
             int nextItemPriority = ((PriorityItem<T>)storage[i]).getPriority();
             
-            //Compare them and assign headIndex the index of the highest priority
+            /**
+             * Compare them and assign headIndex the index of the highest 
+             * priority.
+             */
             headIndex = (currentHeadPriority > nextItemPriority) ? headIndex : i;
         }
         
         return headIndex;
     }
-
+    
+    /**
+     * Returns the highest priority item in the queue.
+     * 
+     * @return The value of the highest priority item in the queue
+     * @throws QueueUnderflowException 
+     */
     @Override
     public T head() throws QueueUnderflowException {
         int headIndex = findIndexOfHighestPriorityItem();
         return ((PriorityItem<T>)storage[headIndex]).getItem();
     }
 
+    /**
+     * Removes the highest priority item from the queue.
+     * 
+     * @throws QueueUnderflowException 
+     */
     @Override
     public void remove() throws QueueUnderflowException {
         int headIndex = findIndexOfHighestPriorityItem();
@@ -78,11 +110,21 @@ public class UnsortedArrayPriorityQueue<T> implements PriorityQueue<T> {
         tailIndex--;
     }
 
+    /**
+     * Returns true if the queue is empty, otherwise returns true.
+     * 
+     * @return Boolean value indicating if the queue is empty
+     */
     @Override
     public boolean isEmpty() {
         return (tailIndex < 0);
     }
     
+    /**
+     * Creates and returns a string representing the state of the queue
+     * 
+     * @return A string representing the state of the queue
+     */
     @Override
     public String toString() {
         String result = "[";
