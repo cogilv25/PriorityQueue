@@ -32,6 +32,8 @@ public class QueueManager {
                 System.out.println("Using a sorted array.");
                 break;
             case "ua":
+                q = new UnsortedArrayPriorityQueue<>(8);
+                break;
             case "sl":
             case "ul":
             case "h":
