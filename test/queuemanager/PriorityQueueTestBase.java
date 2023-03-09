@@ -137,8 +137,6 @@ public abstract class PriorityQueueTestBase {
      * The implementation of these functions differs depending on whether or not
      * the ADT has an expandable capacity.
      */
-    @Test
-    public abstract void shouldAddItemsWhenAddingToNonFullQueue();
     
     @Test
     public abstract void shouldReturnFalseWhenIsEmptyCalledOnNonEmptyQueue();

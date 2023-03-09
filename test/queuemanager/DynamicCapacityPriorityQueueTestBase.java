@@ -9,37 +9,39 @@ import static org.junit.Assert.*;
 
 /**
  * Base Test class for all implementations of ****PriorityQueueTest classes that
- * use a fixed capacity container to store elements.
+ * use a dynamic LIMIT container to store elements.
  * 
- * This is the Base class for all ***PriorityQueueTest classes that use a fixed 
- * capacity container to store items. The common functions for these priority 
- * queue implementations are here to avoid excessive code duplication.
+ * This is the Base class for all ***PriorityQueueTest classes that use a 
+ * dynamic LIMIT container to store items. The common functions for these 
+ * priority queue implementations are here to avoid excessive code duplication.
+ * 
+ * As these implementations dynamically increase their size as elements are
+ * added we could test priority queue's up to the limits of available memory,
+ * however, for the sake of time and my own sanity I will only test up to 15
+ * items.
+ * 
+ * Derived classes must implement an @Before method that initializes pq.
  * 
  * @author Calum Lindsay
  */
-public abstract class FixedCapacityPriorityQueueTestBase extends PriorityQueueTestBase {
+public abstract class DynamicCapacityPriorityQueueTestBase extends PriorityQueueTestBase {
+
+    protected static final int LIMIT = 15;
     /**
-     * The capacity of the Priority Queue to be tested.
-     * Should be the same length as the test data if the test data is to be used.
-     */
-    protected final int capacity = names.length;
-    
-    /**
-     * Tests that items can be added to a queue as long as the queue is not full.
+     * Tests that items can be added up to the LIMIT.
      * 
-     * This is done by recursively adding items until the queue is full and
+     * This is done by recursively adding items until we hit LIMIT and
      * ensuring that each item has actually been added to the queue.
      */
     @Test
-    public void shouldAddItemsWhenAddingToNonFullQueue()
-    {
-        /**
-         * Add items recursively until queue is full, checking each item is
+    public void shouldAddItemsWhenAddingToQueue() {
+      /**
+         * Add items recursively until LIMIT is reached, checking each item is
          * added as we go.
          */
         try 
         {
-            for(int i=0; i<capacity; ++i)
+            for(int i=0; i<LIMIT; ++i)
             {
                 pq.add(names[i],priorities[i]);
                 
@@ -47,15 +49,15 @@ public abstract class FixedCapacityPriorityQueueTestBase extends PriorityQueueTe
                     fail("Item number "+ (i+1) +" was not added to the queue");
             }
         } catch(QueueOverflowException e) {
-            fail("QueueOverflowException recieved when adding to a queue that is not full");
+            fail("QueueOverflowException recieved when adding to queue");
         }
     }
-    
+
     /**
      * Tests that isEmpty will always return false if there are any items in the
-     * queue.
+     * queue up to LIMIT.
      * 
-     * This is done by recursively adding items until the queue is full and
+     * This is done by recursively adding items until we hit LIMIT and
      * ensuring that isEmpty returns false after each item is added. Next
      * items are recursively removed until the queue is empty and it is checked
      * that isEmpty returns false before each item is returned. 
@@ -64,18 +66,18 @@ public abstract class FixedCapacityPriorityQueueTestBase extends PriorityQueueTe
     public void shouldReturnFalseWhenIsEmptyCalledOnNonEmptyQueue()
     {
         /**
-         * Add items recursively until queue is full checking that isEmpty
+         * Add items recursively until we hit LIMIT checking that isEmpty
          * always returns false.
          */
         try
         {
-            for(int i=0;i<capacity;i++)
+            for(int i=0;i<LIMIT;i++)
             {
-                pq.add(i, capacity);
+                pq.add(i, LIMIT);
                 assertFalse(pq.isEmpty());
             }
         } catch(QueueOverflowException e) {
-            fail("QueueOverflowException recieved when adding to a queue that is not full");
+            fail("QueueOverflowException recieved when adding to queue");
         }
         
         /**
@@ -84,7 +86,7 @@ public abstract class FixedCapacityPriorityQueueTestBase extends PriorityQueueTe
          */
         try
         {
-            for(int i=0;i<capacity;i++)
+            for(int i=0;i<LIMIT;i++)
             {
                 assertFalse(pq.isEmpty());
                 pq.remove();
@@ -98,20 +100,20 @@ public abstract class FixedCapacityPriorityQueueTestBase extends PriorityQueueTe
      * Tests that items can be removed from the queue while there is at least
      * one item in the queue.
      * 
-     * This is done by first filling the list with items then recursively
-     * removing items until the queue is empty and checking after each item is
-     * removed that the item was actually removed from the queue.
+     * This is done by first filling the list with items up to LIMIT then
+     * recursively removing items until the queue is empty and checking after
+     * each item is removed that the item was actually removed from the queue.
      */
     @Override
     public void shouldRemoveItemsWhenRemovingFromNonEmptyQueue()
     {
         /**
-         * Add items recursively until queue is full, checking each item is
+         * Add items recursively until we hit LIMIT, checking each item is
          * added as we go.
          */
         try 
         {
-            for(int i=0; i<capacity; ++i)
+            for(int i=0; i<LIMIT; ++i)
             {
                 pq.add(names[i],priorities[i]);
                 
@@ -119,7 +121,7 @@ public abstract class FixedCapacityPriorityQueueTestBase extends PriorityQueueTe
                     fail("Item number "+ (i+1) +" was not added to the queue");
             }
         } catch(QueueOverflowException e) {
-            fail("QueueOverflowException recieved when adding to a queue that is not full");
+            fail("QueueOverflowException recieved when adding to queue");
         }
         
         /**
@@ -128,7 +130,7 @@ public abstract class FixedCapacityPriorityQueueTestBase extends PriorityQueueTe
          */
         try 
         {
-            for(int i=0; i<capacity; ++i)
+            for(int i=0; i<LIMIT; ++i)
             {
                 pq.remove();
                 
@@ -145,21 +147,22 @@ public abstract class FixedCapacityPriorityQueueTestBase extends PriorityQueueTe
      * Tests that head always returns the highest priority item while the queue
      * contains at least 1 item.
      * 
-     * This is done by first filling the list with items and checking after each
-     * item is added that head returns the highest priority item then
-     * recursively removing items until the queue is empty and checking before
-     * each item is removed that head returns the highest priority item.
+     * This is done by first filling the list up to LIMIT with items and
+     * checking after each item is added that head returns the highest priority
+     * item then recursively removing items until the queue is empty and
+     * checking before each item is removed that head returns the highest 
+     * priority item.
      */
     @Override
     public void shouldReturnHighestPriorityItemFromHeadWhenQueueNotEmpty()
     {
         /**
-         * Add items recursively until queue is full checking that the highest
+         * Add items recursively until we hit LIMIT checking that the highest
          * priority item is always returned from head.
          */
         int maxIndex = 0;
         try {
-            for(int i=0; i<capacity; ++i)
+            for(int i=0; i<LIMIT; ++i)
             {
                 pq.add(names[i],priorities[i]);
                 maxIndex = (priorities[maxIndex]>priorities[i]) ? maxIndex : i;
@@ -175,7 +178,7 @@ public abstract class FixedCapacityPriorityQueueTestBase extends PriorityQueueTe
                 }
             }
         } catch(QueueOverflowException e) {
-            fail("QueueOverflowException recieved when adding to a queue that is not full");
+            fail("QueueOverflowException recieved when adding to queue");
         }
         
         /**
@@ -183,7 +186,7 @@ public abstract class FixedCapacityPriorityQueueTestBase extends PriorityQueueTe
          * highest priority item is always returned from head.
          */
         try {
-            for(int i=0; i<capacity; ++i)
+            for(int i=0; i<LIMIT; ++i)
             {
                 /**
                  * Check that the highest priority item is returned by head.
@@ -206,21 +209,22 @@ public abstract class FixedCapacityPriorityQueueTestBase extends PriorityQueueTe
      * Tests that toString returns the expected string when the queue contains
      * at least one item.
      * 
-     * This is done by first filling the list with items and checking after each
-     * item is added that toString contains all the expected items then
-     * recursively removing items until the queue is empty and checking before
-     * each item is removed that toString contains all the expected items.
+     * This is done by first filling the list up to LIMIT with items and
+     * checking after each item is added that toString contains all the expected
+     * items then recursively removing items until the queue is empty and
+     * checking before each item is removed that toString contains all the
+     * expected items.
      */
     @Override
     public void shouldReturnExpectedStringFromToStringWhenQueueNotEmpty() 
     {
         /**
-         * Add items recursively until queue is full ensuring that toString 
+         * Add items recursively until we hit LIMIT ensuring that toString 
          * returns a string containing all the correct items as we go.
          */
         try 
         {
-            for(int i=0; i<capacity; ++i)
+            for(int i=0; i<LIMIT; ++i)
             {
                 pq.add(names[i],priorities[i]);
                 
@@ -234,7 +238,7 @@ public abstract class FixedCapacityPriorityQueueTestBase extends PriorityQueueTe
         } 
         catch(QueueOverflowException e)
         {
-            fail("QueueOverflowException received when adding to a queue that is not full");
+            fail("QueueOverflowException received when adding to queue");
         }
         
         /**
@@ -243,13 +247,13 @@ public abstract class FixedCapacityPriorityQueueTestBase extends PriorityQueueTe
          */
         try
         {
-            for(int i = 0; i < capacity; ++i)
+            for(int i = 0; i < LIMIT; ++i)
             {
                 /**
                  * Loop through the items that should remain in the queue and
                  * for each check that toString returns a string containing them.
                  */
-                for(int j = i; j < capacity; ++j)
+                for(int j = i; j < LIMIT; ++j)
                     assertTrue(pq.toString().contains(namesSortedByPriority[j] + ", " + sortedPriorities[j]));
                 pq.remove();
             }
@@ -259,45 +263,5 @@ public abstract class FixedCapacityPriorityQueueTestBase extends PriorityQueueTe
             fail("QueueUndeflowException received when removing from a queue that is not empty");
         }
     }
-    
-    
-    /**
-     * Tests that the add method throws an exception when the queue is full.
-     * 
-     * This is done by filling the queue and then attempting to add one more
-     * item which should fail, throwing a QueueOverflowException.
-     */
-    @Test
-    public void shouldThrowExceptionWhenAddingToFullQueue()
-    {
-        /**
-         * Add items recursively until queue is full, checking each
-         * item is added as we go.
-         */
-        try 
-        {
-            for(int i=0; i<capacity; ++i)
-            {
-                pq.add(names[i],priorities[i]);
-                
-                if(!pq.toString().contains(names[i] + ", " + priorities[i]))
-                    fail("Item number "+ (i+1) +" was not added to the queue");
-            }
-        } catch(QueueOverflowException e) {
-            fail("QueueOverflowException recieved when adding to a queue that is not full");
-        }
-        
-        /**
-         * Attempting to add another item should throw an exception.
-         */
-        try
-        {
-            pq.add("Some Name",420);
-            fail("No Exception received when adding an item to a full queue");
-        }catch(QueueOverflowException e){}
-    }
-    
-    
-    
     
 }

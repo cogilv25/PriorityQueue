@@ -7,11 +7,11 @@ package queuemanager;
 import org.junit.Before;
 
 /**
- *Test class for the implementation of the UnsortedArrayPriorityQueue ADT.
+ *Test class for the implementation of the UnsortedLinkedPriorityQueue ADT.
  * 
  * @author Calum Lindsay
  */
-public class UnsortedArrayPriorityQueueTest extends FixedCapacityPriorityQueueTestBase 
+public class UnsortedLinkedPriorityQueueTest extends DynamicCapacityPriorityQueueTestBase
 {
     /**
      * This function is run before each test and creates a new priority queue
@@ -20,6 +20,6 @@ public class UnsortedArrayPriorityQueueTest extends FixedCapacityPriorityQueueTe
     @Before
     public void setUp()
     {
-        pq = new UnsortedArrayPriorityQueue<String>(capacity);
+        pq = new UnsortedLinkedPriorityQueue<String>();
     }
 }
