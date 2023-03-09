@@ -35,22 +35,22 @@ public abstract class DynamicCapacityPriorityQueueTestBase extends PriorityQueue
      */
     @Test
     public void shouldAddItemsWhenAddingToQueue() {
-      /**
-         * Add items recursively until LIMIT is reached, checking each item is
-         * added as we go.
-         */
-        try 
-        {
-            for(int i=0; i<LIMIT; ++i)
-            {
-                pq.add(names[i],priorities[i]);
-                
-                if(!pq.toString().contains(names[i] + ", " + priorities[i]))
-                    fail("Item number "+ (i+1) +" was not added to the queue");
-            }
-        } catch(QueueOverflowException e) {
-            fail("QueueOverflowException recieved when adding to queue");
-        }
+        /**
+        * Add items recursively until LIMIT is reached, checking each item is
+        * added as we go.
+        */
+       try 
+       {
+           for(int i=0; i<LIMIT; ++i)
+           {
+               pq.add(names[i],priorities[i]);
+
+               if(!pq.toString().contains(names[i] + ", " + priorities[i]))
+                   fail("Item number "+ (i+1) +" was not added to the queue");
+           }
+       } catch(QueueOverflowException e) {
+           fail("QueueOverflowException recieved when adding to queue");
+       }
     }
 
     /**
@@ -138,7 +138,7 @@ public abstract class DynamicCapacityPriorityQueueTestBase extends PriorityQueue
                     fail("Item ("+ namesSortedByPriority[i] + ", " + sortedPriorities[i] + ") was not removed from the queue");
             }
         } catch(QueueUnderflowException e) {
-            fail("QueueOverflowException received when removing from a queue that is not empty");
+            fail("QueueUnderflowException received when removing from a queue that is not empty");
         }
     }
     
