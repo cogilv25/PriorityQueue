@@ -38,7 +38,8 @@ public class QueueManager {
                 q = new UnsortedLinkedPriorityQueue<>();
                 break;
             case "sl":
-                
+                q = new SortedLinkedPriorityQueue<>();
+                break;
             case "h":
             default:
                 q = new SortedArrayPriorityQueue<>(8);
