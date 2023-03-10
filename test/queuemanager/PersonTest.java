@@ -9,35 +9,50 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author Calum
+ * Test class for the implementation of the Person class.
+ * 
+ * @author Calum Lindsay
  */
 public class PersonTest {
     
+    /**
+     * The person instance used in the tests.
+     */
     private Person instance;
-    private static final String MOCK_PERSON_NAME = "Donald";
     
+    /**
+     * Test string required for tests.
+     */
+    private static final String TEST_PERSON_NAME = "Donald";
+    
+    /**
+     * This method is run before each test and creates a new person object
+     * effectively resetting any state from previously run tests.
+     */
     @Before
-    public void setUp() {
-        instance = new Person(MOCK_PERSON_NAME);
+    public void setUp()
+    {
+        instance = new Person(TEST_PERSON_NAME);
     }
 
     /**
-     * Test of getName method, of class Person.
+     * Tests that getName method operates correctly
      */
     @Test
-    public void testGetName() {
-        String expResult = MOCK_PERSON_NAME;
+    public void testGetName()
+    {
+        String expResult = TEST_PERSON_NAME;
         String result = instance.getName();
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of toString method, of class Person.
+     * Test that toString method operates correctly
      */
     @Test
-    public void testToString() {
-        String expResult = MOCK_PERSON_NAME;
+    public void testToString()
+    {
+        String expResult = TEST_PERSON_NAME;
         String result = instance.toString();
         assertEquals(expResult, result);
     }

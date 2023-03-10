@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package queuemanager;
 
 /**
@@ -12,39 +8,30 @@ package queuemanager;
  *
  * @author Calum Lindsay
  */
-public class UnsortedLinkedPriorityQueue<T> implements PriorityQueue<T> {
+public class UnsortedLinkedPriorityQueue<T> implements PriorityQueue<T>
+{
 
     /**
      * The head or start of the linked list.
      */
-    private Node<PriorityItem<T>> head;
+    private Node<PriorityItem<T>> head = null;
     
     /**
      * The tail or end of the linked list.
      * Keeping track of this makes insertions much faster as we don't need to
      * traverse the whole list to add an item at the end.
      */
-    private Node<PriorityItem<T>> tail;
+    private Node<PriorityItem<T>> tail = null;
 
     /**
-     * The number of items held in the linked list.
+     * The number of items held in the queue.
      */
-    private int count;
+    private int count = 0;
     
     /**
-     * Initializes the ADT.
-     */
-    public UnsortedLinkedPriorityQueue()
-    {
-        head = null;
-        count = 0;
-    }
-    
-    /**
-     * Helper function to find the node before the node of the highest priority
-     * item in the queue.
+     * Helper function to find the node preceding the highest priority node.
      * 
-     * @return  index of the highest priority item stored
+     * @return  Node preceding the highest priority node or null where the highest priority node is head.
      * @throws QueueUnderflowException 
      */
     private Node<PriorityItem<T>> findNodeBeforeHighestPriorityNode() throws QueueUnderflowException
@@ -52,149 +39,114 @@ public class UnsortedLinkedPriorityQueue<T> implements PriorityQueue<T> {
         if(isEmpty())
             throw new QueueUnderflowException();
         
-        /**
-         * If there is only 1 node in the linked list then that node is the
-         * highest priority node and the node behind that node doesn't exist.
-         */
+        /* If there is only 1 node in the linked list then head is the
+         * highest priority node and the node behind head doesn't exist. */
         if(count == 1)
             return null;
         
-        /**
-         * The node before the highest priority node so far.
-         */
+        /* The node before the highest priority node. */
         Node<PriorityItem<T>> nBHPNode = null;
         
-        /**
-         * The highest priority node so far.
-         */
+        /* The highest priority node. */
         Node<PriorityItem<T>> hPNode = head;
         
-        /**
-         * The node before the node being tested against the highest priority 
-         * node do far.
-         */
+        /* The node before the node being tested. */
         Node<PriorityItem<T>> prevNode = head;
         
-        /**
-         * Some less than pretty casting going on here and we have to keep track
-         * of more nodes than I would like but at the end of the day it's simply
-         * a loop finding the node before the node with the highest priority.
-        */
+        /* Find the node before the node with the highest priority. */
         for(int i=0;i<count-1;++i)
         {
-            /**
-             * Find the 2 priorities to compare.
-             */
+            /* Find the 2 priorities to compare. */
             int highestPriorityNodePriority = ((PriorityItem<T>)hPNode.getValue()).getPriority();
             int currentNodePriority = ((PriorityItem<T>)prevNode.getNext().getValue()).getPriority();
             
-            /**
-             * Compare them and assign hPNode to the node with the highest
-             * priority and nBHPNode to the node behind it.
-             */
+            /* Compare them and assign hPNode to the node with the highest
+             * priority and nBHPNode to the node behind it. */
             if (highestPriorityNodePriority < currentNodePriority)
             {
                 nBHPNode = prevNode;
                 hPNode = prevNode.getNext();
             }
             
-            /**
-             * Move to the next node in the linked list.
-             */
+            /* Move to the next node in the linked list. */
             prevNode = prevNode.getNext();
         }
         
         return nBHPNode;
     }
-    /**
-     * Takes an item and a priority, creates a Node containing a PriorityItem
-     * and inserts it at the end of the linked list.
-     * 
-     * @param item
-     * @param priority
-     * @throws QueueOverflowException 
-     */
+    
+    
+    /* These functions inherit their JavaDoc comments from PriorityQueue. */
+    
     @Override
-    public void add(T item, int priority) throws QueueOverflowException {
-        Node<PriorityItem<T>> prevItem = head;
-        if(count>1)
-            prevItem = tail;
+    public void add(T item, int priority) throws QueueOverflowException
+    {
+        /* Remember the tail */
+        Node<PriorityItem<T>> prevTail = tail;
         
+        /* Create a new Node containing a new PriorityItem and insert it at the
+         * end of the linked list. */
         tail = new Node<>(new PriorityItem<>(item,priority));
         
+        /* Link the previous tail to the new node when appropriate. */
         if(count<1)
             head = tail;
         else
-            prevItem.setNext(tail);
+            prevTail.setNext(tail);
         
         count++;
         
     }
 
-    /**
-     * Finds the highest priority item in the queue and returns it.
-     * 
-     * @return The highest priority item in the queue.
-     * @throws QueueUnderflowException 
-     */
+    
     @Override
-    public T head() throws QueueUnderflowException {
-        Node<PriorityItem<T>> nBHPNode = findNodeBeforeHighestPriorityNode();
-        if(nBHPNode == null)
-            return head.getValue().getItem();
-        return nBHPNode.getNext().getValue().getItem();
+    public T head() throws QueueUnderflowException
+    {
+        Node<PriorityItem<T>> prevNode = findNodeBeforeHighestPriorityNode();
+        
+        /* return the item at head if prevNode is null otherwise
+         * return the item at the node after prevNode. */
+        return (prevNode == null) ?
+            head.getValue().getItem() : 
+            prevNode.getNext().getValue().getItem();
     }
 
     
-    /**
-     * Finds the highest priority item in the queue and removes it.
-     * 
-     * @throws QueueUnderflowException 
-     */
     @Override
-    public void remove() throws QueueUnderflowException {
+    public void remove() throws QueueUnderflowException
+    {
         Node<PriorityItem<T>> prevNode = findNodeBeforeHighestPriorityNode();
-        Node<PriorityItem<T>> nextNode;
-        if(count == 1)
-        {
-            head = null;
-            tail = null;
-            count--;
+        
+        /* Since there was no exception thrown we know there is at least one
+         * item in the list. */
+        count--;
+        
+        /* If there was only one item in the list we're done */
+        if(count == 0)
             return;
-        }
+        
+        /* If we are removing head we can just set head to it's next node. */
         if(prevNode == null)
         {
             head = head.getNext();
-            count--;
             return;
         }
-        nextNode = prevNode.getNext().getNext();
         
+        Node<PriorityItem<T>> nextNode = prevNode.getNext().getNext();
+        
+        /* If removing tail we can just set tail to the node before it.
+         * otherwise we can link the node before the one being removed to the
+         * node after the one being removed. */
         if(nextNode == null)
             tail = prevNode;
-        
-        prevNode.setNext(nextNode);
-        
-        count--;
-    }
-
-    /**
-     * Returns true if the queue is empty and false otherwise.
-     * 
-     * @return A boolean indicating if the queue is empty.
-     */
-    @Override
-    public boolean isEmpty() {
-        return (count < 1);
+        else
+            prevNode.setNext(nextNode);
     }
     
-    /**
-     * Creates and returns a string representing the state of the queue
-     * 
-     * @return A string representing the state of the queue
-     */
+    
     @Override
     public String toString() {
+        /* Construct a comma delimited list of items in the queue. */
         String result = "[";
         Node<PriorityItem<T>> current = head;
         for (int i = 0; i < count; i++) {
@@ -206,6 +158,12 @@ public class UnsortedLinkedPriorityQueue<T> implements PriorityQueue<T> {
         }
         result = result + "]";
         return result;
+    }
+    
+    
+    @Override
+    public boolean isEmpty() {
+        return (count < 1);
     }
     
 }

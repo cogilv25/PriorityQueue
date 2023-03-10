@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
- */
 package queuemanager;
 
 import org.junit.Before;
@@ -9,46 +5,61 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author Calum
+ * Test class for the implementation of the PriorityItem class
+ * 
+ * @author Calum Lindsay
  */
 public class PriorityItemTest {
-    
+    /**
+     * The PriorityItem instance used in the tests.
+     */
     private PriorityItem<String> instance;
-    private static final String MOCK_STRING = "Donald";
-    private static final int MOCK_PRIORITY = 1;
     
+    /**
+     * Test string required for tests.
+     */
+    private static final String TEST_STRING = "Donald";
+    
+    /**
+     * Test string required for tests.
+     */
+    private static final int TEST_PRIORITY = 1;
+    
+    /**
+     * This method is run before each test and creates a new PriorityItem
+     * object effectively resetting any state from previously run tests.
+     */
     @Before
     public void setUp() {
-        instance = new PriorityItem<>(MOCK_STRING,MOCK_PRIORITY);
+        instance = new PriorityItem<>(TEST_STRING,TEST_PRIORITY);
     }
 
     /**
-     * Test of getItem method, of class PriorityItem.
+     * Tests that getItem method operates correctly
      */
     @Test
     public void testGetItem() {
-        Object expResult = MOCK_STRING;
+        Object expResult = TEST_STRING;
         Object result = instance.getItem();
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of getPriority method, of class PriorityItem.
+     * Test that getPriority method operates correctly
      */
     @Test
     public void testGetPriority() {
-        int expResult = MOCK_PRIORITY;
+        int expResult = TEST_PRIORITY;
         int result = instance.getPriority();
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of toString method, of class PriorityItem.
+     * Test that toString method operates correctly
      */
     @Test
     public void testToString() {
-        String expResult = "(" + MOCK_STRING + ", " + MOCK_PRIORITY + ")";
+        String expResult = "(" + TEST_STRING + ", " + TEST_PRIORITY + ")";
         String result = instance.toString();
         assertEquals(expResult, result);
     }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package queuemanager;
 
 /**
@@ -13,7 +9,7 @@ package queuemanager;
  */
 public class Node<T> {
     /**
-     * The value stored in the node.
+     * The value stored by the node.
      */
     private T value;
     
@@ -23,7 +19,7 @@ public class Node<T> {
     private Node<T> next = null;
     
     /**
-     * Create a new node storing the provided value.
+     * Creates a new node.
      * 
      * @param value The value to be stored in the node.
      */
@@ -33,7 +29,7 @@ public class Node<T> {
     }
     
     /**
-     * Get the value stored by the node.
+     * The value stored by the node.
      * 
      * @return the value stored by the node.
      */
@@ -53,7 +49,7 @@ public class Node<T> {
     }
     
     /**
-     * Get the node pointed to by this node.
+     * The node pointed to by this node.
      * 
      * @return The node this node points to.
      */

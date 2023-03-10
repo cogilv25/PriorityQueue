@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package queuemanager;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -16,13 +8,18 @@ import static org.junit.Assert.*;
  * 
  * Naming this class PriorityQueueTest causes JUnit4 to attempt to run the tests
  * which isn't what we want. This is the Base class for all ***PriorityQueueTest
- * classes it contains the common functions for all priority queue
- * implementations to avoid excessive code duplication.
+ * classes it contains the common functions and common test data for all
+ * priority queue implementations to avoid excessive code duplication.
+ * 
+ * Derived classes must implement an @Before method that initializes q.
  * 
  * @author Calum Lindsay
  */
 public abstract class PriorityQueueTestBase {
-    protected PriorityQueue pq = null;
+    /**
+     * The PriorityQueue instance used in the tests.
+     */
+    protected PriorityQueue q = null;
     
     /**
      * Common test data for all priority queue tests.
@@ -38,6 +35,10 @@ public abstract class PriorityQueueTestBase {
         "Henrietta", "Jerry",
         "Shaun"
     };
+    
+    /**
+     * Common test data for all priority queue tests.
+     */
     protected int[] priorities = 
     {
         3, 17,
@@ -49,6 +50,7 @@ public abstract class PriorityQueueTestBase {
         13, 87,
         6
     };
+    
     /**
      * Common sorted test data for all priority queue tests.
      */
@@ -63,6 +65,10 @@ public abstract class PriorityQueueTestBase {
         4, 3,
         1
     };
+    
+    /**
+     * Common sorted test data for all priority queue tests.
+     */
     protected String[] namesSortedByPriority = 
     {
         "Abigail", "Jerry",
@@ -82,13 +88,9 @@ public abstract class PriorityQueueTestBase {
     @Test
     public void shouldThrowExceptionWhenHeadCalledOnEmptyQueue()
     {
-        /**
-         * Checking the highest priority item on an empty list should throw an
-         * exception.
-         */
         try 
         {
-            pq.head();
+            q.head();
             /**
              * Fail if no exception is thrown.
              */
@@ -107,7 +109,7 @@ public abstract class PriorityQueueTestBase {
          */
         try
         {
-            pq.remove();
+            q.remove();
             //Fail if no exception is thrown
             fail("No Exception received when removing from an empty queue");
         } catch(QueueUnderflowException e){}
@@ -119,7 +121,7 @@ public abstract class PriorityQueueTestBase {
     @Test
     public void shouldReturnTrueWhenIsEmptyCalledOnEmptyQueue()
     {
-        assertTrue(pq.isEmpty());
+        assertTrue(q.isEmpty());
     }
     
     /**
@@ -129,14 +131,12 @@ public abstract class PriorityQueueTestBase {
     public void shouldReturnExpectedStringFromToStringWhenQueueIsEmpty()
     {
         String expResult = "[]";
-        assertEquals(expResult,pq.toString());
+        assertEquals(expResult,q.toString());
     }
     
     
-    /**
-     * The implementation of these functions differs depending on whether or not
-     * the ADT has an expandable capacity.
-     */
+    /* The implementation of these functions differs depending on whether or not
+     * the ADT has an expandable capacity. */
     
     @Test
     public abstract void shouldReturnFalseWhenIsEmptyCalledOnNonEmptyQueue();
