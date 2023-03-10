@@ -7,8 +7,6 @@ package queuemanager;
 /**
  * Implementation of the PriorityQueue ADT using an unsorted linked list for
  * storage.
- *
- * 
  * 
  * @param <T> The type of things being stored.
  *
@@ -33,6 +31,9 @@ public class UnsortedLinkedPriorityQueue<T> implements PriorityQueue<T> {
      */
     private int count;
     
+    /**
+     * Initializes the ADT.
+     */
     public UnsortedLinkedPriorityQueue()
     {
         head = null;
@@ -105,7 +106,14 @@ public class UnsortedLinkedPriorityQueue<T> implements PriorityQueue<T> {
         
         return nBHPNode;
     }
-    
+    /**
+     * Takes an item and a priority, creates a Node containing a PriorityItem
+     * and inserts it at the end of the linked list.
+     * 
+     * @param item
+     * @param priority
+     * @throws QueueOverflowException 
+     */
     @Override
     public void add(T item, int priority) throws QueueOverflowException {
         Node<PriorityItem<T>> prevItem = head;
@@ -123,6 +131,12 @@ public class UnsortedLinkedPriorityQueue<T> implements PriorityQueue<T> {
         
     }
 
+    /**
+     * Finds the highest priority item in the queue and returns it.
+     * 
+     * @return The highest priority item in the queue.
+     * @throws QueueUnderflowException 
+     */
     @Override
     public T head() throws QueueUnderflowException {
         Node<PriorityItem<T>> nBHPNode = findNodeBeforeHighestPriorityNode();
@@ -131,6 +145,12 @@ public class UnsortedLinkedPriorityQueue<T> implements PriorityQueue<T> {
         return nBHPNode.getNext().getValue().getItem();
     }
 
+    
+    /**
+     * Finds the highest priority item in the queue and removes it.
+     * 
+     * @throws QueueUnderflowException 
+     */
     @Override
     public void remove() throws QueueUnderflowException {
         Node<PriorityItem<T>> prevNode = findNodeBeforeHighestPriorityNode();
@@ -158,6 +178,11 @@ public class UnsortedLinkedPriorityQueue<T> implements PriorityQueue<T> {
         count--;
     }
 
+    /**
+     * Returns true if the queue is empty and false otherwise.
+     * 
+     * @return A boolean indicating if the queue is empty.
+     */
     @Override
     public boolean isEmpty() {
         return (count < 1);

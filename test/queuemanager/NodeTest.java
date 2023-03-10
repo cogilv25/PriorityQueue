@@ -19,8 +19,8 @@ public class NodeTest {
     /**
      * The node instance used in the tests.
      */
-    
     private Node<String> instance;
+    
     /**
      * Test data required for tests.
      */

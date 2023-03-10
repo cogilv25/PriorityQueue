@@ -60,7 +60,7 @@ public abstract class DynamicCapacityPriorityQueueTestBase extends PriorityQueue
      * This is done by recursively adding items until we hit LIMIT and
      * ensuring that isEmpty returns false after each item is added. Next
      * items are recursively removed until the queue is empty and it is checked
-     * that isEmpty returns false before each item is returned. 
+     * that isEmpty returns false before each item is removed. 
      */
     @Override
     public void shouldReturnFalseWhenIsEmptyCalledOnNonEmptyQueue()
@@ -166,6 +166,7 @@ public abstract class DynamicCapacityPriorityQueueTestBase extends PriorityQueue
             {
                 pq.add(names[i],priorities[i]);
                 maxIndex = (priorities[maxIndex]>priorities[i]) ? maxIndex : i;
+                
                 /**
                  * Check that the highest priority item is returned by head.
                  */
@@ -198,6 +199,7 @@ public abstract class DynamicCapacityPriorityQueueTestBase extends PriorityQueue
                 {
                     fail("QueueUnderflowException recieved when calling head on a queue that is not empty");
                 }
+                
                 pq.remove();
             }
         } catch(QueueUnderflowException e) {
