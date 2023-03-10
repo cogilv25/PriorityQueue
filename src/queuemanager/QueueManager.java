@@ -34,8 +34,11 @@ public class QueueManager {
             case "ua":
                 q = new UnsortedArrayPriorityQueue<>(8);
                 break;
-            case "sl":
             case "ul":
+                q = new UnsortedLinkedPriorityQueue<>();
+                break;
+            case "sl":
+                
             case "h":
             default:
                 q = new SortedArrayPriorityQueue<>(8);
@@ -57,7 +60,9 @@ public class QueueManager {
 
         /* Main loop */
         while (!input.toLowerCase().equals("q")) {
-            if (input.toLowerCase().charAt(0) == 'a') {
+            if (input.isEmpty())
+                System.out.println("No command entered!");
+            else if (input.toLowerCase().charAt(0) == 'a') {
 
                 /* Add an item to the queue */
                 String name = input.substring(2, input.lastIndexOf(' '));
