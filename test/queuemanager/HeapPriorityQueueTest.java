@@ -17,7 +17,7 @@ public class HeapPriorityQueueTest extends FixedCapacityPriorityQueueTestBase {
     @Before
     public void setUp()
     {
-        q = new HeapPriorityQueue();
+        q = new HeapPriorityQueue(capacity);
     }
     
     /**
