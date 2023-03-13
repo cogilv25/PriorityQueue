@@ -1,5 +1,6 @@
 package queuemanager;
 
+import org.junit.Test;
 import org.junit.Before;
 
 /**
@@ -17,6 +18,15 @@ public class SortedArrayPriorityQueueTest extends FixedCapacityPriorityQueueTest
     public void setUp()
     {
         q = new SortedArrayPriorityQueue<String>(capacity);
+    }
+    
+    /**
+     * Tests that the internal array is sorted as items are added to the queue.
+     */
+    @Test
+    public void shouldSortInternalArrayWhenItemsAreAddedToQueue()
+    {
+        //TODO: Implementation
     }
     
 }

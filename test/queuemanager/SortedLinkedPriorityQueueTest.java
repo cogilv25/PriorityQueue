@@ -21,6 +21,15 @@ public class SortedLinkedPriorityQueueTest extends DynamicCapacityPriorityQueueT
     }
     
     /**
+     * Tests that the internal array is sorted as items are added to the queue.
+     */
+    @Test
+    public void shouldSortInternalArrayWhenItemsAreAddedToQueue()
+    {
+        //TODO: Implementation
+    }
+    
+    /**
      * Tests a possible flaw where when seeking the highest priority 
      * item it goes past the end of the linked list.
      */
