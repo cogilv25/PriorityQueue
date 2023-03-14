@@ -15,63 +15,82 @@ package queuemanager;
  */
 public class HeapPriorityQueue<T> implements PriorityQueue<T> {
 
-    
+    /**
+     * Where the data is actually stored.
+     */
     private final Object [] storage;
     
+    /**
+     * The maximum number of items the Queue can store.
+     */
     private final int capacity;
     
+    /**
+     * The current number of items stored.
+     */
     private int size = 0;
     
-    
+    /**
+     * Create a new empty queue with the given capacity.
+     *
+     * @param capacity
+     */
     public HeapPriorityQueue(int capacity)
     {
         this.capacity = capacity;
         storage = new Object[capacity];
     }
     
-    
+    /**
+     * Helper function to ensure the integrity of the binary heap is maintained
+     * after an item is added to the queue.
+     */
     private void bubbleUp()
     {
-        /* Initilalize indexes */
-        int childIndex = size-1;
+        /* Initilalize indexes. */
+        int index = size-1;
         int parentIndex = size/2-1;
         
         while(parentIndex >= 0)
         {
-            /* Get Priorities */
+            /* Get priorities. */
             int parentPriority = ((PriorityItem<T>)storage[parentIndex]).getPriority();
-            int childPriority = ((PriorityItem<T>)storage[childIndex]).getPriority();
+            int childPriority = ((PriorityItem<T>)storage[index]).getPriority();
             
-            /* If parent has a higher priority then we're done */
+            /* If parent has a higher priority then we're done. */
             if(parentPriority >= childPriority)
                 break;
             else
             {
-                /* Otherwise we swap parent and child */
-                Object temp = storage[childIndex];
-                storage[childIndex] = storage[parentIndex];
+                /* Otherwise we swap parent and child. */
+                Object temp = storage[index];
+                storage[index] = storage[parentIndex];
                 storage[parentIndex] = temp;
             }
             
-            /* Re-calculate indexes for next loop */
-            childIndex = parentIndex;
-            parentIndex = (childIndex+1)/2-1;
+            /* Re-calculate indexes for next loop. */
+            index = parentIndex;
+            parentIndex = (index+1)/2-1;
         }
     }
     
+    /**
+     * Helper function to ensure the integrity of the binary heap is maintained
+     * after an item is removed from the queue.
+     */
     private void bubbleDown()
     {
-        /* Initilalize variables for sorting */
+        /* Initilalize indexes. */
         int index = 0;
         int childIndex = 1;
         
-        while(childIndex<size)
+        while(childIndex < size)
         {
-            /* Get the index of the child with the highest priority */
+            /* Get the index and priority of the highest priority child. */
             int childPriority = ((PriorityItem<T>)storage[childIndex]).getPriority();
-            if(childIndex + 1 <size)
+            if(childIndex + 1 < size)
             {
-                int rightChildPriority = ((PriorityItem<T>)storage[childIndex+1]).getPriority();;
+                int rightChildPriority = ((PriorityItem<T>)storage[childIndex+1]).getPriority();
                 if(childPriority<rightChildPriority)
                 {
                     childPriority = rightChildPriority;
@@ -79,37 +98,43 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T> {
                 }
             }
             
+            /* Get parent priority and compare to child priority. If the parent
+             * has a higher property we can break out of the method. */
             int parentPriority = ((PriorityItem<T>)storage[index]).getPriority();            
-            if(parentPriority < childPriority)
+            if(parentPriority > childPriority)
+                break;
+            else
             {
-                /* Swap parent and child then update index */
+                /* Otherwise we will swap parent and child then update index. */
                 Object temp = storage[index];
                 storage[index] = storage[childIndex];
                 storage[childIndex] = temp;
                 index = childIndex;
             }
-            else
-                break;
             
-            /* Re-calculate the index of the left child */
+            /* Re-calculate the index of the next left child */
             childIndex = index * 2 + 1;
         }
     }
+    
+    /* These functions inherit their JavaDoc comments from PriorityQueue. */
     
     @Override
     public void add(T item, int priority) throws QueueOverflowException {
         if(size == capacity)
             throw new QueueOverflowException();
         
+        /* Create the new item at the end of the heap */
         storage[size] = new PriorityItem<>(item,priority);
         size++;
         
+        /* Resolve integrity of the heap. */
         bubbleUp();
     }
 
     @Override
     public T head() throws QueueUnderflowException {
-        if(size == 0)
+        if(isEmpty())
             throw new QueueUnderflowException();
         
         return ((PriorityItem<T>)storage[0]).getItem();
@@ -117,26 +142,49 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T> {
 
     @Override
     public void remove() throws QueueUnderflowException {
-        if(size == 0)
+        if(isEmpty())
             throw new QueueUnderflowException();
+        
+        /* If no exception was thrown there is at least one item to remove. */
         size--;
-            
+        /* If there was only one item size == 0 and we are done. */
         if(size > 0)
         {
+            /* Replace head with the last item in the heap. */
             storage[0] = storage[size];
+            /* Resolve integrity of the binary heap. */
             bubbleDown();
         }  
+    }
+    /**
+     * Helper method for toString to assess if an index is the first item on a
+     * new level within the binary heap.
+     * 
+     * @param index The index to be assessed.
+     * @return 
+     */
+    private boolean isStartOfHeapLevel(int index)
+    {
+        for(int i = 2; i <= index + 1; i *= 2)
+            if(i - 1 == index)
+                return true;
+        return false;
     }
     
     @Override
     public String toString() {
-        /* Construct a comma delimited list of items in the queue. */
+        /* Construct a comma delimited list of items in the queue. Displaying
+         * each level of the heap on a new line. */
         String result = "[";
         for (int i = 0; i < size; i++) {
-            if (i > 0) {
-                result = result + ", ";
-            }
-            result = result + storage[i];
+            
+            if (i > 0)
+                result += ", ";
+            
+            if(isStartOfHeapLevel(i))
+                result += '\n';
+            
+            result += storage[i];
         }
         result = result + "]";
         return result;
