@@ -41,6 +41,8 @@ public class QueueManager {
                 q = new SortedLinkedPriorityQueue<>();
                 break;
             case "h":
+                q = new HeapPriorityQueue<>(8);
+                break;
             default:
                 q = new SortedArrayPriorityQueue<>(8);
                 System.out.println("Invalid choice, using sorted array.");
