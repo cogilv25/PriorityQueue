@@ -48,9 +48,10 @@ public abstract class DynamicCapacityPriorityQueueTestBase extends PriorityQueue
        }
     }
 
-    /**
-     * Tests that isEmpty returns false if the queue contains at least one item.
-     */
+    
+    /* These methods inherit their JavaDoc comments from PriorityQueueTestBase. */
+    
+    
     @Override
     public void shouldReturnFalseWhenIsEmptyCalledOnNonEmptyQueue()
     {
@@ -81,10 +82,7 @@ public abstract class DynamicCapacityPriorityQueueTestBase extends PriorityQueue
         }
     }
     
-    /**
-     * Tests that items can be removed from the queue while there is at least
-     * one item in the queue.
-     */
+    
     @Override
     public void shouldRemoveItemsWhenRemovingFromNonEmptyQueue()
     {
@@ -120,10 +118,6 @@ public abstract class DynamicCapacityPriorityQueueTestBase extends PriorityQueue
     }
     
     
-    /**
-     * Tests that head always returns the highest priority item while the queue
-     * contains at least 1 item.
-     */
     @Override
     public void shouldReturnHighestPriorityItemFromHeadWhenQueueNotEmpty()
     {
@@ -170,10 +164,7 @@ public abstract class DynamicCapacityPriorityQueueTestBase extends PriorityQueue
         }
     }
     
-    /**
-     * Tests that toString returns the expected string when the queue contains
-     * at least one item.
-     */
+    
     @Override
     public void shouldReturnExpectedStringFromToStringWhenQueueNotEmpty() 
     {

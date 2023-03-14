@@ -98,6 +98,7 @@ public abstract class PriorityQueueTestBase {
         } catch(QueueUnderflowException e) {}
     }
     
+    
     /**
      * Tests that remove throws an exception when called on an empty queue.
      */
@@ -115,6 +116,7 @@ public abstract class PriorityQueueTestBase {
         } catch(QueueUnderflowException e){}
     }
     
+    
     /**
      * Tests that isEmpty returns true when the queue is empty.
      */
@@ -123,6 +125,7 @@ public abstract class PriorityQueueTestBase {
     {
         assertTrue(q.isEmpty());
     }
+    
     
     /**
      * Tests that toString returns the expected string when the queue is empty.
@@ -138,22 +141,35 @@ public abstract class PriorityQueueTestBase {
     /* The implementation of these functions differs depending on whether or not
      * the ADT has an expandable capacity. */
     
+    
+    /**
+     * Tests that isEmpty returns false if the queue contains at least one item.
+     */
     @Test
     public abstract void shouldReturnFalseWhenIsEmptyCalledOnNonEmptyQueue();
     
+    
+    /**
+     * Tests that items can be removed from the queue while there is at least
+     * one item in the queue.
+     */
     @Test
     public abstract void shouldRemoveItemsWhenRemovingFromNonEmptyQueue();
     
+    
+    /**
+     * Tests that head always returns the highest priority item while the queue
+     * contains at least 1 item.
+     */
     @Test
     public abstract void shouldReturnHighestPriorityItemFromHeadWhenQueueNotEmpty();
     
+    
+    /**
+     * Tests that toString returns the expected string when the queue contains
+     * at least one item.
+     */
     @Test
     public abstract void shouldReturnExpectedStringFromToStringWhenQueueNotEmpty();
-    
-    @Test
-    public void shouldAddAndRemove1000ItemsWithoutError()
-    {
-        //TODO: Implementations
-    }
     
 }

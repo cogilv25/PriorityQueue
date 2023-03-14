@@ -10,7 +10,8 @@ import static org.junit.Assert.*;
  *
  * @author Calum Lindsay
  */
-public class NodeTest {
+public class NodeTest
+{
     
     /**
      * The node instance used in the tests.
@@ -27,6 +28,7 @@ public class NodeTest {
      */
     private String TEST_STRING_2 = "ASUS";
     
+    
     /**
      * This method is run before each test and creates a new node
      * effectively resetting any state from previously run tests.
@@ -37,6 +39,7 @@ public class NodeTest {
         instance = new Node<>(TEST_STRING);
     }
     
+    
     /**
      * Tests that the getValue method operates correctly.
      */
@@ -45,6 +48,7 @@ public class NodeTest {
     {
         assertEquals(TEST_STRING, instance.getValue());
     }
+    
     
     /**
      * Tests that the setNext and getNext methods operate correctly.
@@ -62,4 +66,5 @@ public class NodeTest {
         instance.setNext(nextNode);
         assertEquals(nextNode,instance.getNext());
     }
+    
 }

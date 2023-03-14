@@ -23,6 +23,7 @@ public class UnsortedArrayPriorityQueue<T> implements PriorityQueue<T>
      */
     private int tailIndex;
     
+    
     /**
      * Create a new empty queue of the given size.
      *
@@ -33,6 +34,7 @@ public class UnsortedArrayPriorityQueue<T> implements PriorityQueue<T>
         tailIndex = -1;
         storage = new Object[size];
     }
+    
     
     /**
      * Helper function to find the index of the highest priority item in the 
@@ -65,6 +67,7 @@ public class UnsortedArrayPriorityQueue<T> implements PriorityQueue<T>
     
     
     /* These functions inherit their JavaDoc comments from PriorityQueue. */
+    
     
     @Override
     public void add(T item, int priority) throws QueueOverflowException
@@ -113,6 +116,7 @@ public class UnsortedArrayPriorityQueue<T> implements PriorityQueue<T>
         result = result + "]";
         return result;
     }
+    
     
     @Override
     public boolean isEmpty() {

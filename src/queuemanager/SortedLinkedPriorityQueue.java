@@ -8,7 +8,9 @@ package queuemanager;
  *
  * @author Calum Lindsay
  */
-public class SortedLinkedPriorityQueue<T> implements PriorityQueue<T> {
+public class SortedLinkedPriorityQueue<T> implements PriorityQueue<T>
+{
+    
     /**
      * The head or start of the linked list.
      */
@@ -21,6 +23,7 @@ public class SortedLinkedPriorityQueue<T> implements PriorityQueue<T> {
     
     
     /* These functions inherit their JavaDoc comments from PriorityQueue. */
+    
     
     @Override
     public void add(T item, int priority) throws QueueOverflowException

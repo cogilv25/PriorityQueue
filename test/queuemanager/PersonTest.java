@@ -13,7 +13,8 @@ import static org.junit.Assert.*;
  * 
  * @author Calum Lindsay
  */
-public class PersonTest {
+public class PersonTest
+{
     
     /**
      * The person instance used in the tests.
@@ -25,6 +26,7 @@ public class PersonTest {
      */
     private static final String TEST_PERSON_NAME = "Donald";
     
+    
     /**
      * This method is run before each test and creates a new person object
      * effectively resetting any state from previously run tests.
@@ -35,6 +37,7 @@ public class PersonTest {
         instance = new Person(TEST_PERSON_NAME);
     }
 
+    
     /**
      * Tests that getName method operates correctly
      */
@@ -46,6 +49,7 @@ public class PersonTest {
         assertEquals(expResult, result);
     }
 
+    
     /**
      * Test that toString method operates correctly
      */

@@ -9,6 +9,7 @@ import org.junit.Before;
  */
 public class UnsortedArrayPriorityQueueTest extends FixedCapacityPriorityQueueTestBase 
 {
+    
     /**
      * This method is run before each test and creates a new priority queue
      * effectively resetting any state from previously run tests.
@@ -18,4 +19,5 @@ public class UnsortedArrayPriorityQueueTest extends FixedCapacityPriorityQueueTe
     {
         q = new UnsortedArrayPriorityQueue<String>(capacity);
     }
+    
 }

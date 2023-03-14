@@ -9,7 +9,9 @@ import static org.junit.Assert.*;
  * 
  * @author Calum Lindsay
  */
-public class PriorityItemTest {
+public class PriorityItemTest
+{
+    
     /**
      * The PriorityItem instance used in the tests.
      */
@@ -25,6 +27,7 @@ public class PriorityItemTest {
      */
     private static final int TEST_PRIORITY = 1;
     
+    
     /**
      * This method is run before each test and creates a new PriorityItem
      * object effectively resetting any state from previously run tests.
@@ -34,6 +37,7 @@ public class PriorityItemTest {
         instance = new PriorityItem<>(TEST_STRING,TEST_PRIORITY);
     }
 
+    
     /**
      * Tests that getItem method operates correctly
      */
@@ -44,6 +48,7 @@ public class PriorityItemTest {
         assertEquals(expResult, result);
     }
 
+    
     /**
      * Test that getPriority method operates correctly
      */
@@ -54,6 +59,7 @@ public class PriorityItemTest {
         assertEquals(expResult, result);
     }
 
+    
     /**
      * Test that toString method operates correctly
      */

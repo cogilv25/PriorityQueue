@@ -7,16 +7,19 @@ package queuemanager;
  * 
  * @author Calum Lindsay
  */
-public class Node<T> {
+public class Node<T>
+{
+    
     /**
      * The value stored by the node.
      */
-    private T value;
+    private final T value;
     
     /**
      * The node pointed to by this node.
      */
     private Node<T> next = null;
+    
     
     /**
      * Creates a new node.
@@ -28,6 +31,7 @@ public class Node<T> {
         this.value = value;
     }
     
+    
     /**
      * The value stored by the node.
      * 
@@ -38,6 +42,7 @@ public class Node<T> {
         return value;
     }
     
+    
     /**
      * Set the node pointed to by this node.
      * 
@@ -47,6 +52,7 @@ public class Node<T> {
     {
         this.next = next;
     }
+    
     
     /**
      * The node pointed to by this node.

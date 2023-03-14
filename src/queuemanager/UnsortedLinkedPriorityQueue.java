@@ -28,6 +28,7 @@ public class UnsortedLinkedPriorityQueue<T> implements PriorityQueue<T>
      */
     private int count = 0;
     
+    
     /**
      * Helper function to find the node preceding the highest priority node.
      * 
@@ -77,6 +78,7 @@ public class UnsortedLinkedPriorityQueue<T> implements PriorityQueue<T>
     
     
     /* These functions inherit their JavaDoc comments from PriorityQueue. */
+    
     
     @Override
     public void add(T item, int priority) throws QueueOverflowException
@@ -165,5 +167,6 @@ public class UnsortedLinkedPriorityQueue<T> implements PriorityQueue<T>
     public boolean isEmpty() {
         return (count < 1);
     }
+    
     
 }

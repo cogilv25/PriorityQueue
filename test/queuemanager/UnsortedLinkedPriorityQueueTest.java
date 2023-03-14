@@ -11,6 +11,7 @@ import org.junit.Test;
  */
 public class UnsortedLinkedPriorityQueueTest extends DynamicCapacityPriorityQueueTestBase
 {
+    
     /**
      * This method is run before each test and creates a new priority queue
      * effectively resetting any state from previously run tests.
@@ -20,6 +21,7 @@ public class UnsortedLinkedPriorityQueueTest extends DynamicCapacityPriorityQueu
     {
         q = new UnsortedLinkedPriorityQueue<String>();
     }
+    
     
     /**
      * Tests a possible flaw where when the ULPQ ADT seeks the highest priority 

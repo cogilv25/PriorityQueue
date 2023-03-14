@@ -13,7 +13,8 @@ package queuemanager;
  *
  * @author Calum Lindsay
  */
-public class HeapPriorityQueue<T> implements PriorityQueue<T> {
+public class HeapPriorityQueue<T> implements PriorityQueue<T>
+{
 
     /**
      * Where the data is actually stored.
@@ -30,6 +31,7 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T> {
      */
     private int size = 0;
     
+    
     /**
      * Create a new empty queue with the given capacity.
      *
@@ -40,6 +42,7 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T> {
         this.capacity = capacity;
         storage = new Object[capacity];
     }
+    
     
     /**
      * Helper function to ensure the integrity of the binary heap is maintained
@@ -73,6 +76,7 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T> {
             parentIndex = (index+1)/2-1;
         }
     }
+    
     
     /**
      * Helper function to ensure the integrity of the binary heap is maintained
@@ -117,45 +121,7 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T> {
         }
     }
     
-    /* These functions inherit their JavaDoc comments from PriorityQueue. */
     
-    @Override
-    public void add(T item, int priority) throws QueueOverflowException {
-        if(size == capacity)
-            throw new QueueOverflowException();
-        
-        /* Create the new item at the end of the heap */
-        storage[size] = new PriorityItem<>(item,priority);
-        size++;
-        
-        /* Resolve integrity of the heap. */
-        bubbleUp();
-    }
-
-    @Override
-    public T head() throws QueueUnderflowException {
-        if(isEmpty())
-            throw new QueueUnderflowException();
-        
-        return ((PriorityItem<T>)storage[0]).getItem();
-    }
-
-    @Override
-    public void remove() throws QueueUnderflowException {
-        if(isEmpty())
-            throw new QueueUnderflowException();
-        
-        /* If no exception was thrown there is at least one item to remove. */
-        size--;
-        /* If there was only one item size == 0 and we are done. */
-        if(size > 0)
-        {
-            /* Replace head with the last item in the heap. */
-            storage[0] = storage[size];
-            /* Resolve integrity of the binary heap. */
-            bubbleDown();
-        }  
-    }
     /**
      * Helper method for toString to assess if an index is the first item on a
      * new level within the binary heap.
@@ -171,8 +137,56 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T> {
         return false;
     }
     
+    
+    /* These functions inherit their JavaDoc comments from PriorityQueue. */
+    
     @Override
-    public String toString() {
+    public void add(T item, int priority) throws QueueOverflowException
+    {
+        if(size == capacity)
+            throw new QueueOverflowException();
+        
+        /* Create the new item at the end of the heap */
+        storage[size] = new PriorityItem<>(item,priority);
+        size++;
+        
+        /* Resolve integrity of the heap. */
+        bubbleUp();
+    }
+
+    
+    @Override
+    public T head() throws QueueUnderflowException
+    {
+        if(isEmpty())
+            throw new QueueUnderflowException();
+        
+        return ((PriorityItem<T>)storage[0]).getItem();
+    }
+
+    
+    @Override
+    public void remove() throws QueueUnderflowException
+    {
+        if(isEmpty())
+            throw new QueueUnderflowException();
+        
+        /* If no exception was thrown there is at least one item to remove. */
+        size--;
+        /* If there was only one item size == 0 and we are done. */
+        if(size > 0)
+        {
+            /* Replace head with the last item in the heap. */
+            storage[0] = storage[size];
+            /* Resolve integrity of the binary heap. */
+            bubbleDown();
+        }  
+    }
+    
+    
+    @Override
+    public String toString()
+    {
         /* Construct a comma delimited list of items in the queue. Displaying
          * each level of the heap on a new line. */
         String result = "[";
@@ -190,8 +204,10 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T> {
         return result;
     }
 
+    
     @Override
-    public boolean isEmpty() {
+    public boolean isEmpty()
+    {
         return (size < 1);
     }
  
