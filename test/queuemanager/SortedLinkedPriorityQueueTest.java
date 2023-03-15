@@ -7,7 +7,7 @@ import org.junit.Before;
  * 
  * @author Calum Lindsay
  */
-public class SortedLinkedPriorityQueueTest extends DynamicCapacityPriorityQueueTestBase
+public class SortedLinkedPriorityQueueTest extends PriorityQueueTestBase
 {
     
     /**

@@ -17,7 +17,7 @@ public class SortedArrayPriorityQueueTest extends FixedCapacityPriorityQueueTest
     @Before
     public void setUp()
     {
-        q = new SortedArrayPriorityQueue<String>(capacity);
+        q = new SortedArrayPriorityQueue<String>(limit);
     }
     
 }

@@ -9,7 +9,7 @@ import org.junit.Test;
  * 
  * @author Calum Lindsay
  */
-public class UnsortedLinkedPriorityQueueTest extends DynamicCapacityPriorityQueueTestBase
+public class UnsortedLinkedPriorityQueueTest extends PriorityQueueTestBase
 {
     
     /**

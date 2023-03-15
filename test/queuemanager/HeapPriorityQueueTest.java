@@ -7,7 +7,8 @@ import org.junit.Before;
  * 
  * @author Calum Lindsay
  */
-public class HeapPriorityQueueTest extends FixedCapacityPriorityQueueTestBase {
+public class HeapPriorityQueueTest extends FixedCapacityPriorityQueueTestBase
+{
     
     /**
      * This method is run before each test and creates a new priority queue
@@ -16,7 +17,7 @@ public class HeapPriorityQueueTest extends FixedCapacityPriorityQueueTestBase {
     @Before
     public void setUp()
     {
-        q = new HeapPriorityQueue(capacity);
+        q = new HeapPriorityQueue(limit);
     }
     
 }

@@ -15,7 +15,9 @@ import static org.junit.Assert.*;
  * 
  * @author Calum Lindsay
  */
-public abstract class PriorityQueueTestBase {
+public abstract class PriorityQueueTestBase
+{
+    
     /**
      * The PriorityQueue instance used in the tests.
      */
@@ -81,6 +83,11 @@ public abstract class PriorityQueueTestBase {
         "Holly"
     };
     
+    /**
+     * Maximum number of items to add to the queue.
+     */
+    protected final int limit = names.length;
+    
     
     /**
      * Tests that head throws an exception when called on an empty queue.
@@ -138,23 +145,76 @@ public abstract class PriorityQueueTestBase {
     }
     
     
-    /* The implementation of these functions differs depending on whether or not
-     * the ADT has an expandable capacity. */
-    
-    
     /**
      * Tests that isEmpty returns false if the queue contains at least one item.
      */
     @Test
-    public abstract void shouldReturnFalseWhenIsEmptyCalledOnNonEmptyQueue();
-    
+    public void shouldReturnFalseWhenIsEmptyCalledOnNonEmptyQueue()
+    {
+        /* Add items recursively until we hit limit checking that isEmpty
+         * always returns false. */
+        try
+        {
+            for(int i=0;i<limit;i++)
+            {
+                q.add(i, limit);
+                assertFalse(q.isEmpty());
+            }
+        } catch(QueueOverflowException e) {
+            fail("QueueOverflowException received when adding to queue");
+        }
+        
+        /* Remove items recursively until queue is empty checking that isEmpty
+         * returns true as long as there are items in the queue. */
+        try
+        {
+            for(int i=0;i<limit;i++)
+            {
+                assertFalse(q.isEmpty());
+                q.remove();
+            }
+        } catch(QueueUnderflowException e) {
+            fail("QueueUnderflowException received when removing from a queue that is not empty");
+        }
+    }
     
     /**
      * Tests that items can be removed from the queue while there is at least
      * one item in the queue.
      */
     @Test
-    public abstract void shouldRemoveItemsWhenRemovingFromNonEmptyQueue();
+    public void shouldRemoveItemsWhenRemovingFromNonEmptyQueue()
+    {
+        /* Add items recursively until we hit limit, checking each item is
+         * added as we go. */
+        try 
+        {
+            for(int i=0; i<limit; ++i)
+            {
+                q.add(names[i],priorities[i]);
+                
+                if(!q.toString().contains(names[i] + ", " + priorities[i]))
+                    fail("Item number "+ (i+1) +" was not added to the queue");
+            }
+        } catch(QueueOverflowException e) {
+            fail("QueueOverflowException received when adding to queue");
+        }
+        
+        /* Remove items recursively until queue is empty, checking each item is
+         * removed as we go. */
+        try 
+        {
+            for(int i=0; i<limit; ++i)
+            {
+                q.remove();
+                
+                if(q.toString().contains(namesSortedByPriority[i] + ", " + sortedPriorities[i]))
+                    fail("Item ("+ namesSortedByPriority[i] + ", " + sortedPriorities[i] + ") was not removed from the queue");
+            }
+        } catch(QueueUnderflowException e) {
+            fail("QueueUnderflowException received when removing from a queue that is not empty");
+        }
+    }
     
     
     /**
@@ -162,7 +222,50 @@ public abstract class PriorityQueueTestBase {
      * contains at least 1 item.
      */
     @Test
-    public abstract void shouldReturnHighestPriorityItemFromHeadWhenQueueNotEmpty();
+    public void shouldReturnHighestPriorityItemFromHeadWhenQueueNotEmpty()
+    {
+        /* Add items recursively until we hit limit checking that the highest
+         * priority item is always returned from head. */
+        int maxIndex = 0;
+        try {
+            for(int i=0; i<limit; ++i)
+            {
+                q.add(names[i],priorities[i]);
+                maxIndex = (priorities[maxIndex]>priorities[i]) ? maxIndex : i;
+                
+                /* Check that the highest priority item is returned by head. */
+                try
+                {
+                    assertEquals(names[maxIndex],q.head());
+                } catch(QueueUnderflowException e)
+                {
+                    fail("QueueUnderflowException received when calling head on a non-empty queue");
+                }
+            }
+        } catch(QueueOverflowException e) {
+            fail("QueueOverflowException received when adding to queue");
+        }
+        
+        /* Remove items recursively until queue is empty checking that the
+         * highest priority item is always returned from head. */
+        try {
+            for(int i=0; i<limit; ++i)
+            {
+                /* Check that the highest priority item is returned by head. */
+                try
+                {
+                    assertEquals(namesSortedByPriority[i],q.head());
+                } catch(QueueUnderflowException e)
+                {
+                    fail("QueueUnderflowException received when calling head on a queue that is not empty");
+                }
+                
+                q.remove();
+            }
+        } catch(QueueUnderflowException e) {
+            fail("QueueUnderflowException received when removing from a queue that is not empty");
+        }
+    }
     
     
     /**
@@ -170,6 +273,66 @@ public abstract class PriorityQueueTestBase {
      * at least one item.
      */
     @Test
-    public abstract void shouldReturnExpectedStringFromToStringWhenQueueNotEmpty();
+    public void shouldReturnExpectedStringFromToStringWhenQueueNotEmpty() 
+    {
+        /* Add items recursively until we hit limit ensuring that toString 
+         * returns a string containing all the correct items as we go. */
+        try 
+        {
+            for(int i=0; i<limit; ++i)
+            {
+                q.add(names[i],priorities[i]);
+                
+                /* Loop through the items that should be in the queue and for
+                 * each check that toString returns a String containing them. */
+                for(int j = 0; j < i; ++j)
+                assertTrue(q.toString().contains(names[j] + ", " + priorities[j]));
+            }
+        } 
+        catch(QueueOverflowException e)
+        {
+            fail("QueueOverflowException received when adding to queue");
+        }
+        
+        /* Recursively remove items until empty ensuring that toString returns a
+         * string containing all the correct items as we go. */
+        try
+        {
+            for(int i = 0; i < limit; ++i)
+            {
+                /* Loop through the items that should remain in the queue and
+                 * check that toString returns a string containing them. */
+                for(int j = i; j < limit; ++j)
+                    assertTrue(q.toString().contains(namesSortedByPriority[j] + ", " + sortedPriorities[j]));
+                q.remove();
+            }
+        }
+        catch(QueueUnderflowException e)
+        {
+            fail("QueueUndeflowException received when removing from a queue that is not empty");
+        }
+    }
+    
+    
+    /**
+     * Tests that items can be added up to the limit.
+     */
+    @Test
+    public void shouldAddItemsWhenAddingToQueue() {
+        /* Add items recursively until limit is reached, checking each item is
+        * added as we go. */
+       try 
+       {
+           for(int i=0; i<limit; ++i)
+           {
+               q.add(names[i],priorities[i]);
+
+               if(!q.toString().contains(names[i] + ", " + priorities[i]))
+                   fail("Item number "+ (i+1) +" was not added to the queue");
+           }
+       } catch(QueueOverflowException e) {
+           fail("QueueOverflowException received when adding to queue");
+       }
+    }
     
 }

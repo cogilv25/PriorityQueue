@@ -17,7 +17,7 @@ public class UnsortedArrayPriorityQueueTest extends FixedCapacityPriorityQueueTe
     @Before
     public void setUp()
     {
-        q = new UnsortedArrayPriorityQueue<String>(capacity);
+        q = new UnsortedArrayPriorityQueue<String>(limit);
     }
     
 }
