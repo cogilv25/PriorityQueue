@@ -37,7 +37,7 @@ public class UnsortedArrayPriorityQueue<T> implements PriorityQueue<T>
     
     
     /**
-     * Helper function to find the index of the highest priority item in the 
+     * Helper method to find the index of the highest priority item in the 
      * queue.
      * 
      * @return  index of the highest priority item stored
@@ -66,7 +66,7 @@ public class UnsortedArrayPriorityQueue<T> implements PriorityQueue<T>
     }
     
     
-    /* These functions inherit their JavaDoc comments from PriorityQueue. */
+    /* These methods inherit their JavaDoc comments from PriorityQueue. */
     
     
     @Override
@@ -77,7 +77,7 @@ public class UnsortedArrayPriorityQueue<T> implements PriorityQueue<T>
         if(tailIndex >= storage.length - 1)
             throw new QueueOverflowException();
         
-        tailIndex++;
+        ++tailIndex;
         storage[tailIndex] = new PriorityItem<>(item,priority);
     }
     
@@ -107,7 +107,7 @@ public class UnsortedArrayPriorityQueue<T> implements PriorityQueue<T>
     public String toString() {
         /* Construct a comma delimited list of items in the queue. */
         String result = "[";
-        for (int i = 0; i <= tailIndex; i++) {
+        for (int i = 0; i <= tailIndex; ++i) {
             if (i > 0) {
                 result = result + ", ";
             }

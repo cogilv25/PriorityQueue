@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
  * 
  * Naming this class PriorityQueueTest causes JUnit4 to attempt to run the tests
  * which isn't what we want. This is the Base class for all ***PriorityQueueTest
- * classes it contains the common functions and common test data for all
+ * classes it contains the common methods and common test data for all
  * priority queue implementations to avoid excessive code duplication.
  * 
  * Derived classes must implement an @Before method that initializes q.
@@ -155,7 +155,7 @@ public abstract class PriorityQueueTestBase
          * always returns false. */
         try
         {
-            for(int i=0;i<limit;i++)
+            for(int i=0;i<limit;++i)
             {
                 q.add(i, limit);
                 assertFalse(q.isEmpty());
@@ -168,7 +168,7 @@ public abstract class PriorityQueueTestBase
          * returns true as long as there are items in the queue. */
         try
         {
-            for(int i=0;i<limit;i++)
+            for(int i=0;i<limit;++i)
             {
                 assertFalse(q.isEmpty());
                 q.remove();

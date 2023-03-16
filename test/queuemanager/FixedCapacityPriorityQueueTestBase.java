@@ -8,8 +8,8 @@ import static org.junit.Assert.*;
  * use a fixed capacity container to store elements.
  * 
  * This is the Base class for all ***PriorityQueueTest classes that use a fixed 
- * capacity container to store items. The common functions for these priority 
- * queue implementations are here to avoid excessive code duplication.
+ * capacity container to store items. The common methods for these priority 
+ * queue implementations are here.
  * 
  * Derived classes must implement an @Before method that initializes q.
  * 

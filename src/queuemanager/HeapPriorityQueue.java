@@ -45,7 +45,7 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T>
     
     
     /**
-     * Helper function to ensure the integrity of the binary heap is maintained
+     * Helper method to ensure the integrity of the binary heap is maintained
      * after an item is added to the queue.
      */
     private void bubbleUp()
@@ -79,7 +79,7 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T>
     
     
     /**
-     * Helper function to ensure the integrity of the binary heap is maintained
+     * Helper method to ensure the integrity of the binary heap is maintained
      * after an item is removed from the queue.
      */
     private void bubbleDown()
@@ -98,7 +98,7 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T>
                 if(childPriority<rightChildPriority)
                 {
                     childPriority = rightChildPriority;
-                    childIndex++;
+                    ++childIndex;
                 }
             }
             
@@ -138,7 +138,7 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T>
     }
     
     
-    /* These functions inherit their JavaDoc comments from PriorityQueue. */
+    /* These methods inherit their JavaDoc comments from PriorityQueue. */
     
     @Override
     public void add(T item, int priority) throws QueueOverflowException
@@ -148,7 +148,7 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T>
         
         /* Create the new item at the end of the heap */
         storage[size] = new PriorityItem<>(item,priority);
-        size++;
+        ++size;
         
         /* Resolve integrity of the heap. */
         bubbleUp();
@@ -190,7 +190,7 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T>
         /* Construct a comma delimited list of items in the queue. Displaying
          * each level of the heap on a new line. */
         String result = "[";
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; ++i) {
             
             if (i > 0)
                 result += ", ";

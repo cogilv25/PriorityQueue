@@ -22,7 +22,7 @@ public class SortedLinkedPriorityQueue<T> implements PriorityQueue<T>
     private int count = 0;
     
     
-    /* These functions inherit their JavaDoc comments from PriorityQueue. */
+    /* These methods inherit their JavaDoc comments from PriorityQueue. */
     
     
     @Override
@@ -35,7 +35,7 @@ public class SortedLinkedPriorityQueue<T> implements PriorityQueue<T>
         if(isEmpty())
         {
             head = newNode;
-            count++;
+            ++count;
             return;
         }
         
@@ -62,7 +62,7 @@ public class SortedLinkedPriorityQueue<T> implements PriorityQueue<T>
         else
             insertAfter.setNext(newNode);
         
-        count++;
+        ++count;
     }
 
     
@@ -96,7 +96,7 @@ public class SortedLinkedPriorityQueue<T> implements PriorityQueue<T>
         /* Construct a comma delimited list of items in the queue. */
         String result = "[";
         Node<PriorityItem<T>> current = head;
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < count; ++i) {
             if (i > 0) {
                 result = result + ", ";
             }
